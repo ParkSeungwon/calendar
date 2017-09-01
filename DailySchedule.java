@@ -41,6 +41,7 @@ class DailySchedule extends JPanel implements ActionListener
 			buttons[i].addActionListener(this);
 			add(buttons[i]);
 		}
+		repaint();
 	}
 
 	public void actionPerformed(ActionEvent e)
