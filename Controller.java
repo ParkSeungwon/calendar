@@ -11,6 +11,7 @@ class Controller
 	};
 	private	Vector<String> schedule = new Vector<String>();
 	private	Vector<Integer> ratio = new Vector<Integer>();
+	private int selected_day = 1;
 	
 	public Controller()
 	{
@@ -19,6 +20,7 @@ class Controller
 	void date_click(String date)
 	{
 		int day = Integer.parseInt(date);
+		selected_day = day;
 		int month = model.get(Calendar.MONTH);
 		int year = model.get(Calendar.YEAR);
 		int[] this_day = {year, month, day};
@@ -53,7 +55,7 @@ class Controller
 
 	void schedule_click(int n)
 	{
-//		System.out.println("schedule " + n + "th is clicked");
+		selected_day = n;
 		int start = 0;
 		for(int i=0; i<n-1; i++) start += ratio.elementAt(i);
 		int end = ratio.elementAt(n);
@@ -67,7 +69,7 @@ class Controller
 	}
 
 	private void setDate()
-	{
+	{//populate table
 		String[][] s = new String[6][7];
 		int days = model.getMaxDays();
 		int weekday = model.getWeekDay();
@@ -90,5 +92,10 @@ class Controller
 
 	void add_schedule(int a, int b, String memo)
 	{
+		int[] time = { model.get(Calendar.YEAR), model.get(Calendar.MONTH), 
+			selected_day, a, b};
+		model.scheduleNmemo.put(time, memo);
+		model.save();
+		date_click(Integer.toString(selected_day));
 	}
 }
