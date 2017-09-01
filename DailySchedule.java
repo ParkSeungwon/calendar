@@ -1,20 +1,20 @@
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.*;
 
-class DailySchedule extends Box implements ActionListener
+class DailySchedule extends JPanel implements ActionListener
 {
 	JButton[] buttons;
-	JPanel[] panels;
 	Controller cInterface;
 	final int vlength = 800, hlength = 200;
 	int sz = 0;
 
 	public DailySchedule(Controller ci) 
 	{
-		super(BoxLayout.PAGE_AXIS);
 		cInterface = ci;
 		setSize(hlength, vlength);
+		setLayout(null);
 	}
 
 	void set(String[] schedule, int[] ratio) 
@@ -22,18 +22,16 @@ class DailySchedule extends Box implements ActionListener
 		sz = schedule.length;
 		assert(sz == ratio.length);
 		removeAll();
-		int sum = 0;
+		int sum = 0, vpos = 0;
 		for(int r : ratio) sum += r;
 		buttons = new JButton[sz];
-		panels = new JPanel[sz];
 		for(int i=0; i<sz; i++) {
+			int lng = ratio[i] * vlength / sum;
 			buttons[i] = new JButton(schedule[i]);
-			panels[i] = new JPanel();
-			panels[i].add(buttons[i]);
-			panels[i].setSize(hlength, ratio[i] / sum * vlength);
-			add(panels[i]);
-//			buttons[i].setSize(hlength, ratio[i] / sum * vlength);
+			buttons[i].setBounds(0, vpos, hlength, lng);
 			buttons[i].addActionListener(this);
+			add(buttons[i]);
+			vpos += lng;
 		}
 	}
 

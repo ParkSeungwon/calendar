@@ -18,13 +18,13 @@ class MainFrame extends JFrame
 		String[][] s = new String[6][7];
 		s[4][5] = "21";
 		cal.setDate(s);
-		int[] ratio = {1,2};
-		String[] s2 = {"fnalksd", "fjlsk"};
+		int[] ratio = {1,2,3};
+		String[] s2 = {"fnalksd", "fjlsk", "fdk"};
 		schedule.set(s2, ratio);
 		hbox.add(new JScrollPane(cal));//JScrollPane make column header visible
 		hbox.add(schedule);
 		setTitle("Calendar");
-		setSize(800, 600);
+		setSize(800, 800);
 		setVisible(true);
 	}
 }
