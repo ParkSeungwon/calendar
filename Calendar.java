@@ -18,6 +18,7 @@ class Calendar extends JTable
 		setCellSelectionEnabled(true);
 		setSelectionBackground(Color.cyan);
 		setDefaultEditor(Object.class, null);//disable cell edit
+		setSize(500, 500);
 	}
 
 	void setDate(String[][] date)
