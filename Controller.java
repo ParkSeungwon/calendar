@@ -4,6 +4,10 @@ class Controller
 {
 	MainFrame main;
 	Model model = new Model();
+	final String[] month_name = {
+		"JAN", "Feb", "Mar", "Apr", "May", "Jun", 
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	};
 	
 	public Controller()
 	{
@@ -23,8 +27,6 @@ class Controller
 	{
 		model.prev_month();
 		setDate();
-		main.year_month.setText(model.get(Calendar.YEAR) + " " + 
-				(1 + model.get(Calendar.MONTH)));
 	}
 
 	private void setDate()
@@ -39,15 +41,14 @@ class Controller
 			n++;
 		}
 		main.cal.setDate(s);
+		main.year_month.setText(model.get(Calendar.YEAR) + " " + 
+				month_name[model.get(Calendar.MONTH)]);
 	}
-
 
 	void next()
 	{
 		model.next_month();
 		setDate();
-		main.year_month.setText(model.get(Calendar.YEAR) + " " + 
-				(1 + model.get(Calendar.MONTH)));
 	}
 
 	void add_schedule(int a, int b, String memo)

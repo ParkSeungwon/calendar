@@ -65,13 +65,19 @@ class Model extends GregorianCalendar
 
 	void prev_month()
 	{
-		roll(Calendar.MONTH, false);
+		if(get(Calendar.MONTH) == 0) {
+			roll(Calendar.YEAR, false);
+			set(Calendar.MONTH, 11);
+		} else roll(Calendar.MONTH, false);
 		set(Calendar.DAY_OF_MONTH, 1);
 	}
 
 	void next_month()
 	{
-		roll(Calendar.MONTH, true);
+		if(get(Calendar.MONTH) == 11) {
+			roll(Calendar.YEAR, true);
+			set(Calendar.MONTH, 0);
+		} else roll(Calendar.MONTH, true);
 		set(Calendar.DAY_OF_MONTH, 1);
 	}
 }
