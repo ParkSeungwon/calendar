@@ -1,18 +1,13 @@
 import java.util.*;
+import java.util.Calendar;
 import java.io.*;
 
-class Model
+class Model extends GregorianCalendar
 {
-	int year, month, day;//current
 	HashMap<int[], String> scheduleNmemo = new HashMap<int[], String>();
 
 	public Model()
 	{
-		GregorianCalendar cal = new GregorianCalendar();
-		year = cal.YEAR;
-		month = cal.MONTH;
-		day = cal.DAY_OF_MONTH;
-
 		try {
 			FileInputStream fis = new FileInputStream("schedule.txt");
 			ObjectInputStream ois = new ObjectInputStream(fis);
@@ -21,6 +16,7 @@ class Model
 			fis.close();
 		} catch(IOException e) {
 			e.printStackTrace();
+			save();
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -48,24 +44,34 @@ class Model
 		}
 	}
 
-	int getMaxDays(int year, int month)
+	int getMaxDays()
 	{
-		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
-		return cal.getActualMaximum(cal.DAY_OF_MONTH);
+		return getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
-	int getWeekDay(int year, int month, int day)
+	int getWeekDay()
 	{
-		GregorianCalendar cal = new GregorianCalendar(year, month, day);
-		return cal.DAY_OF_WEEK;
+		return get(Calendar.DAY_OF_WEEK);
 	}
 
-	Date today()
+	void today()
 	{
 		GregorianCalendar cal = new GregorianCalendar();
-		int year = cal.YEAR;
-		int month = cal.MONTH;
-		int day = cal.DAY_OF_MONTH;
-		return new Date(year, month, day);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		set(year, month, day);
+	}
+
+	void prev_month()
+	{
+		roll(Calendar.MONTH, false);
+		set(Calendar.DAY_OF_MONTH, 1);
+	}
+
+	void next_month()
+	{
+		roll(Calendar.MONTH, true);
+		set(Calendar.DAY_OF_MONTH, 1);
 	}
 }

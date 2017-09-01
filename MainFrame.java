@@ -17,7 +17,7 @@ class MainFrame extends JFrame implements ActionListener
 	public MainFrame(Controller ci)
 	{
 		cInterface = ci;
-		ci.mainInterface = this;
+		ci.main= this;
 		left.addActionListener(this);
 		right.addActionListener(this);
 		cal = new Calendar(ci);
