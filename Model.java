@@ -4,7 +4,7 @@ import java.io.*;
 
 class Model extends GregorianCalendar
 {
-	HashMap<int[], String> scheduleNmemo = new HashMap<int[], String>();
+	private HashMap<int[], String> scheduleNmemo = new HashMap<int[], String>();
 
 	public Model()
 	{
@@ -20,6 +20,20 @@ class Model extends GregorianCalendar
 		} catch(ClassNotFoundException e) { e.printStackTrace(); }
 	}
 
+	synchronized HashMap<int[], String> get_today_schedule()
+	{
+		HashMap<int[], String> hmap = new HashMap<int[], String>();
+		int[] this_day = {year(), month(), day()};
+		for(Map.Entry<int[], String> entry : scheduleNmemo.entrySet()) {
+			int[] key = entry.getKey();
+			String memo = entry.getValue();
+			boolean ok = true;
+			for(int i=0; i<3; i++) if(key[i] != this_day[i]) ok = false;
+			if(ok) hmap.put(key, memo);
+		}
+		return hmap;
+	}
+	
 	synchronized void add(int[] time, String memo)
 	{
 		scheduleNmemo.put(time, memo);
@@ -27,9 +41,11 @@ class Model extends GregorianCalendar
 
 	synchronized void del(int[] time)
 	{
-		for(int[] key : scheduleNmemo.keySet()) 
+		Vector<int[]> v = new Vector<int[]>();
+		for(int[] key : scheduleNmemo.keySet()) //cannot remove inside iteration
 			if(key[0] == time[0] && key[1] == time[1] && key[2] == time[2] && 
-				key[3] <= time[3] && time[4] <= key[4]) scheduleNmemo.remove(key);
+				key[3] <= time[3] && time[4] <= key[4]) v.add(key);
+		for(int[] key : v) scheduleNmemo.remove(key);
 	}
 
 	synchronized void save()

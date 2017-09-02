@@ -16,27 +16,21 @@ class Controller
 	{//canlendat table date click event
 		int day = Integer.parseInt(date);
 		model.set(Calendar.DAY_OF_MONTH, day);
-		int[] this_day = {model.year(), model.month(), day};
 		
 		schedule.removeAllElements();
 		ratio.removeAllElements();
 		int prev = 0;
-		for(Map.Entry<int[], String> entry : model.scheduleNmemo.entrySet()) {
+		HashMap<int[], String> hmap = model.get_today_schedule();
+		for(Map.Entry<int[], String> entry : hmap.entrySet()) {
 			int[] key = entry.getKey();
 			String memo = entry.getValue();
-			boolean ok = true;
-			for(int i=0; i<3; i++) if(key[i] != this_day[i]) ok = false;
-			if(ok) {
-				for(int k : key)System.out.println(k);
-				System.out.println(memo);	
-				if(key[3] != prev) {//blank schedule button
-					schedule.add("");
-					ratio.add(key[3] - prev);
-				}
-				schedule.add(memo);
-				ratio.add(key[4] - key[3]);
-				prev = key[4];
+			if(key[3] != prev) {//blank schedule button
+				schedule.add("");
+				ratio.add(key[3] - prev);
 			}
+			schedule.add(memo);
+			ratio.add(key[4] - key[3]);
+			prev = key[4];
 		}
 		if(prev != 24 * 60) {
 			schedule.add("");
