@@ -17,9 +17,7 @@ class Model extends GregorianCalendar
 		} catch(IOException e) {
 			e.printStackTrace();
 			save();
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch(ClassNotFoundException e) { e.printStackTrace(); }
 	}
 
 	synchronized void add(int[] time, String memo)
@@ -43,9 +41,7 @@ class Model extends GregorianCalendar
 			oos.writeObject(scheduleNmemo);
 			oos.close();
 			fos.close();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		} catch(IOException e) { e.printStackTrace(); }
 	}
 
 	int getMaxDays() { return getActualMaximum(Calendar.DAY_OF_MONTH); }
