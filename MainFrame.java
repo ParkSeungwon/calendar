@@ -27,12 +27,6 @@ class MainFrame extends JFrame implements ActionListener
 		hbox.add(vbox);
 		vbox.add(command);
 		command.add(left); command.add(year_month); command.add(right);
-		String[][] s = new String[6][7];
-		s[4][5] = "21";
-		cal.setDate(s);
-		int[] ratio = {1,2,3};
-		String[] s2 = {"fnalksd", "fjlsk", "fdk"};
-		schedule.set(s2, ratio);
 		vbox.add(new JScrollPane(cal));//JScrollPane make column header visible
 		hbox.add(schedule);
 

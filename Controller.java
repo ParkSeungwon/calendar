@@ -24,6 +24,7 @@ class Controller
 		int month = model.get(Calendar.MONTH);
 		int year = model.get(Calendar.YEAR);
 		int[] this_day = {year, month, day};
+		
 		schedule.removeAllElements();
 		ratio.removeAllElements();
 		int prev = 0;
@@ -33,7 +34,7 @@ class Controller
 			boolean ok = true;
 			for(int i=0; i<3; i++) if(key[i] != this_day[i]) ok = false;
 			if(ok) {
-				if(prev != 0 && key[3] != prev) {
+				if(key[3] != prev) {//blank schedule button
 					schedule.add("");
 					ratio.add(key[3] - prev);
 				}
@@ -46,10 +47,12 @@ class Controller
 			schedule.add("");
 			ratio.add(24 * 60 - prev);
 		}
-		String[] s = new String[schedule.size()];
-		int[] l = new int[ratio.size()];
-		for(int i=0; i<s.length; i++) s[i] = schedule.elementAt(i);
-		for(int i=0; i<l.length; i++) l[i] = ratio.elementAt(i);
+
+		int sz = schedule.size();
+		String[] s = new String[sz];
+		int[] l = new int[sz];
+		for(int i=0; i<sz; i++) s[i] = schedule.elementAt(i);
+		for(int i=0; i<sz; i++) l[i] = ratio.elementAt(i);
 		main.schedule.set(s, l);
 	}
 
@@ -57,19 +60,26 @@ class Controller
 	{
 		selected_day = n;
 		int start = 0;
-		for(int i=0; i<n-1; i++) start += ratio.elementAt(i);
-		int end = ratio.elementAt(n);
+		for(int i=0; i<n; i++) start += ratio.elementAt(i);
+		int end = start + ratio.elementAt(n);
 		Popup popup = new Popup(start, end, schedule.elementAt(n), this, main);
 	}
 
 	void prev()
 	{
-		model.prev_month();
+		main.cal.select(model.prev_month() - 1, 0);
 		setDate();
+		date_click("1");
+	}
+	void next()
+	{//show next month
+		main.cal.select(model.next_month() - 1, 0);
+		setDate();
+		date_click("1");
 	}
 
 	private void setDate()
-	{//populate table
+	{//populate table with current month
 		String[][] s = new String[6][7];
 		int days = model.getMaxDays();
 		int weekday = model.getWeekDay();
@@ -84,14 +94,9 @@ class Controller
 				month_name[model.get(Calendar.MONTH)]);
 	}
 
-	void next()
-	{
-		model.next_month();
-		setDate();
-	}
 
 	void add_schedule(int a, int b, String memo)
-	{
+	{//add a new schedule and repaint
 		int[] time = { model.get(Calendar.YEAR), model.get(Calendar.MONTH), 
 			selected_day, a, b};
 		model.scheduleNmemo.put(time, memo);

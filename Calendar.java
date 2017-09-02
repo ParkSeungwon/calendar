@@ -26,6 +26,11 @@ class Calendar extends JTable
 		for(int j=0; j<6; j++) for(int i=0; i<7; i++) setValueAt(date[j][i], j, i);
 	}
 
+	void select(int col, int row)
+	{
+		changeSelection(row, col, false, false);
+	}
+
 	class MouseClicked extends MouseAdapter
 	{//mouse event
 		public void mouseClicked(MouseEvent e)
