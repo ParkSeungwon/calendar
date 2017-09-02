@@ -22,18 +22,21 @@ class Model extends GregorianCalendar
 		}
 	}
 
-	void add(int[] time, String memo)
+	synchronized void add(int[] time, String memo)
 	{
 		scheduleNmemo.put(time, memo);
 	}
 
-	void del(int[] time)
+	synchronized void del(int[] time)
 	{
-		scheduleNmemo.remove(time);
+		for(int[] key : scheduleNmemo.keySet()) 
+			if(key[0] == time[0] && key[1] == time[1] && key[2] == time[2] && 
+				key[3] <= time[3] && time[4] <= key[4]) scheduleNmemo.remove(key);
 	}
-	void save()
+
+	synchronized void save()
 	{
-		scheduleNmemo.values().remove("");
+		scheduleNmemo.values().remove(""); 
 		try {
 			FileOutputStream fos = new FileOutputStream("schedule.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -45,15 +48,11 @@ class Model extends GregorianCalendar
 		}
 	}
 
-	int getMaxDays()
-	{
-		return getActualMaximum(Calendar.DAY_OF_MONTH);
-	}
-
-	int getWeekDay()
-	{
-		return get(Calendar.DAY_OF_WEEK);
-	}
+	int getMaxDays() { return getActualMaximum(Calendar.DAY_OF_MONTH); }
+	int getWeekDay() { return get(Calendar.DAY_OF_WEEK); }
+	int year() { return get(Calendar.YEAR); }
+	int month() { return get(Calendar.MONTH); }
+	int day() { return get(Calendar.DAY_OF_MONTH); }
 
 	void today()
 	{

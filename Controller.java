@@ -11,19 +11,12 @@ class Controller
 	};
 	private	Vector<String> schedule = new Vector<String>();
 	private	Vector<Integer> ratio = new Vector<Integer>();
-	private int selected_day = 1;
 	
-	public Controller()
-	{
-	}
-
 	void date_click(String date)
 	{//canlendat table date click event
 		int day = Integer.parseInt(date);
-		selected_day = day;
-		int month = model.get(Calendar.MONTH);
-		int year = model.get(Calendar.YEAR);
-		int[] this_day = {year, month, day};
+		model.set(Calendar.DAY_OF_MONTH, day);
+		int[] this_day = {model.year(), model.month(), day};
 		
 		schedule.removeAllElements();
 		ratio.removeAllElements();
@@ -91,17 +84,17 @@ class Controller
 			n++;
 		}
 		main.cal.setDate(s);
-		main.year_month.setText(model.get(Calendar.YEAR) + " " + 
-				month_name[model.get(Calendar.MONTH)]);
+		main.year_month.setText(model.year() + " " + month_name[model.month()]);
 	}
 
 
 	void add_schedule(int a, int b, String memo)
 	{//add a new schedule and repaint, Popup ok click event
-		int[] time = { model.get(Calendar.YEAR), model.get(Calendar.MONTH), 
-			selected_day, a, b };
-		model.scheduleNmemo.put(time, memo);
+		int[] t = {model.year(), model.month(), model.day(), a, b};
+		model.del(t);//first delete former block
+		int[] time = { model.year(), model.month(), model.day(), a, b };
+		model.add(time, memo);
 		model.save();
-		date_click(Integer.toString(selected_day));
+		date_click(Integer.toString(model.day()));
 	}
 }

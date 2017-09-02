@@ -16,6 +16,7 @@ class Popup extends JDialog implements ActionListener, ChangeListener
 	public void actionPerformed(ActionEvent e)
 	{//button event
 		JButton bt = (JButton)e.getSource();
+		setVisible(false);
 		if(bt == ok) {
 			int a = from.getValue(), b = to.getValue();
 			assert(a != b);
@@ -23,7 +24,6 @@ class Popup extends JDialog implements ActionListener, ChangeListener
 			if(a < b) cInterface.add_schedule(a, b, s);
 			else cInterface.add_schedule(b, a, s);
 		} 
-		setVisible(false);
 	}
 
 	public void stateChanged(ChangeEvent e)
