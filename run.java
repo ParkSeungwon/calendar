@@ -9,5 +9,4 @@ public class run
 		ci.prev();
 		ci.next();
 	}
-
 }

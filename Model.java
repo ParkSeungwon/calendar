@@ -33,6 +33,7 @@ class Model extends GregorianCalendar
 	}
 	void save()
 	{
+		scheduleNmemo.values().remove("");
 		try {
 			FileOutputStream fos = new FileOutputStream("schedule.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);

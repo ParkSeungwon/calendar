@@ -12,7 +12,7 @@ class test
 
 	public static void main(String[] s)
 	{
-		test t = new test();
+		
 	}
 }
 

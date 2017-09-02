@@ -4,7 +4,6 @@ import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.Color;
 
-
 class DailySchedule extends JPanel implements ActionListener
 {
 	final int vlength = 800, hlength = 200, labelwidth = 100;
@@ -31,9 +30,10 @@ class DailySchedule extends JPanel implements ActionListener
 		sz = schedule.length;
 		assert(sz == ratio.length);
 		if(buttons != null) for(JButton jb : buttons) remove(jb);
+		buttons = new JButton[sz];
+
 		int sum = 0, vpos = 0;
 		for(int r : ratio) sum += r;
-		buttons = new JButton[sz];
 		for(int i=0; i<sz; i++) {
 			int lng = ratio[i] * vlength / sum;
 			buttons[i] = new JButton(schedule[i]);
@@ -47,7 +47,6 @@ class DailySchedule extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{//click nth button
 		JButton bt = (JButton)e.getSource();
-		for(int i=0; i<sz; i++) 
-			if(bt == buttons[i]) cInterface.schedule_click(i);
+		for(int i=0; i<sz; i++) if(bt == buttons[i]) cInterface.schedule_click(i);
 	}
 }

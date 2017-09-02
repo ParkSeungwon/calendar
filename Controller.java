@@ -18,7 +18,7 @@ class Controller
 	}
 
 	void date_click(String date)
-	{
+	{//canlendat table date click event
 		int day = Integer.parseInt(date);
 		selected_day = day;
 		int month = model.get(Calendar.MONTH);
@@ -34,6 +34,8 @@ class Controller
 			boolean ok = true;
 			for(int i=0; i<3; i++) if(key[i] != this_day[i]) ok = false;
 			if(ok) {
+				for(int k : key)System.out.println(k);
+				System.out.println(memo);	
 				if(key[3] != prev) {//blank schedule button
 					schedule.add("");
 					ratio.add(key[3] - prev);
@@ -57,8 +59,7 @@ class Controller
 	}
 
 	void schedule_click(int n)
-	{
-		selected_day = n;
+	{//Schedule button click event
 		int start = 0;
 		for(int i=0; i<n; i++) start += ratio.elementAt(i);
 		int end = start + ratio.elementAt(n);
@@ -66,7 +67,7 @@ class Controller
 	}
 
 	void prev()
-	{
+	{//previous button event
 		main.cal.select(model.prev_month() - 1, 0);
 		setDate();
 		date_click("1");
@@ -96,9 +97,9 @@ class Controller
 
 
 	void add_schedule(int a, int b, String memo)
-	{//add a new schedule and repaint
+	{//add a new schedule and repaint, Popup ok click event
 		int[] time = { model.get(Calendar.YEAR), model.get(Calendar.MONTH), 
-			selected_day, a, b};
+			selected_day, a, b };
 		model.scheduleNmemo.put(time, memo);
 		model.save();
 		date_click(Integer.toString(selected_day));
