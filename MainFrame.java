@@ -12,6 +12,7 @@ class MainFrame extends JFrame implements ActionListener
 	Box command = new Box(BoxLayout.LINE_AXIS);
 	Box vbox = new Box(BoxLayout.PAGE_AXIS);
 	JButton left = new JButton("<"), right = new JButton(">");
+	JButton	today = new JButton("today");
 	JLabel year_month = new JLabel("");
 
 	public MainFrame(Controller ci)
@@ -20,13 +21,15 @@ class MainFrame extends JFrame implements ActionListener
 		ci.main= this;
 		left.addActionListener(this);
 		right.addActionListener(this);
+		today.addActionListener(this);
 		cal = new Calendar(ci);
 		schedule = new DailySchedule(ci);
 
 		add(hbox);
 		hbox.add(vbox);
 		vbox.add(command);
-		command.add(left); command.add(year_month); command.add(right);
+		command.add(left); command.add(year_month); 
+		command.add(right); command.add(today);
 		vbox.add(new JScrollPane(cal));//JScrollPane make column header visible
 		hbox.add(schedule);
 
@@ -41,6 +44,7 @@ class MainFrame extends JFrame implements ActionListener
 		JButton bt = (JButton)e.getSource();
 		if(bt == left) cInterface.prev();
 		else if(bt == right) cInterface.next();
+		else if(bt == today) cInterface.today();
 	}
 }
 

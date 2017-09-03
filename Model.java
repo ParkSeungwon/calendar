@@ -5,7 +5,7 @@ import java.io.*;
 class Model extends GregorianCalendar implements Comparator<int[]>
 {
 	private TreeMap<int[], String> scheduleNmemo = new TreeMap<int[], String>(this);
-	private TreeMap<int[], String> tmap;
+	private TreeMap<int[], String> tmap;//hashmap is not sorted automatically
 
 	public Model()
 	{
@@ -30,7 +30,7 @@ class Model extends GregorianCalendar implements Comparator<int[]>
 	}
 
 	public int compare(int[] a , int[] b)
-	{
+	{//comparator implementation
 		return compare(a, b, 0);
 	}
 

@@ -81,6 +81,24 @@ class Controller
 		main.year_month.setText(model.year() + " " + month_name[model.month()]);
 	}
 
+	public void today()
+	{//go to today
+		int prev_year = model.year();
+		int prev_month = model.month();
+		model.today();
+		int target_year = model.year();
+		int target_month = model.month();
+		model.set(Calendar.YEAR, prev_year);
+		model.set(Calendar.MONTH, prev_month);
+		while(target_year > model.year()) next();
+		while(target_year < model.year()) prev();
+		while(target_month > model.month()) next();
+		while(target_month < model.month()) prev();
+
+		model.today();
+		date_click(Integer.toString(model.day()));
+		main.cal.select(model.getWeekDay()-1, model.get(Calendar.WEEK_OF_MONTH)-1);
+	}
 
 	void add_schedule(int a, int b, String memo)
 	{//add a new schedule and repaint, Popup ok click event
