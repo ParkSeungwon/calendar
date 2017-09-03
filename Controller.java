@@ -20,7 +20,7 @@ class Controller
 		schedule.removeAllElements();
 		ratio.removeAllElements();
 		int prev = 0;
-		HashMap<int[], String> hmap = model.get_today_schedule();
+		TreeMap<int[], String> hmap = model.get_today_schedule();
 		for(Map.Entry<int[], String> entry : hmap.entrySet()) {
 			int[] key = entry.getKey();
 			String memo = entry.getValue();

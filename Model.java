@@ -2,36 +2,56 @@ import java.util.*;
 import java.util.Calendar;
 import java.io.*;
 
-class Model extends GregorianCalendar
+class Model extends GregorianCalendar implements Comparator<int[]>
 {
-	private HashMap<int[], String> scheduleNmemo = new HashMap<int[], String>();
+	private TreeMap<int[], String> scheduleNmemo = new TreeMap<int[], String>(this);
+	private TreeMap<int[], String> tmap;
 
 	public Model()
 	{
 		try {
 			FileInputStream fis = new FileInputStream("schedule.txt");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			scheduleNmemo = (HashMap)ois.readObject();
+			scheduleNmemo = (TreeMap)ois.readObject();
 			ois.close();
 			fis.close();
+			print();
 		} catch(IOException e) {
 			e.printStackTrace();
 			save();
 		} catch(ClassNotFoundException e) { e.printStackTrace(); }
 	}
 
-	synchronized HashMap<int[], String> get_today_schedule()
+	private int compare(int[] a, int[] b, int n)
 	{
-		HashMap<int[], String> hmap = new HashMap<int[], String>();
+		if(n == a.length) return 0;
+		if(a[n] == b[n]) return compare(a, b, n+1);
+		return a[n] - b[n];
+	}
+
+	public int compare(int[] a , int[] b)
+	{
+		return compare(a, b, 0);
+	}
+
+	int getMaxDays() { return getActualMaximum(Calendar.DAY_OF_MONTH); }
+	int getWeekDay() { return get(Calendar.DAY_OF_WEEK); }
+	int year() { return get(Calendar.YEAR); }
+	int month() { return get(Calendar.MONTH); }
+	int day() { return get(Calendar.DAY_OF_MONTH); }
+
+	synchronized TreeMap<int[], String> get_today_schedule()
+	{
+		tmap = new TreeMap<int[], String>(this);
 		int[] this_day = {year(), month(), day()};
 		for(Map.Entry<int[], String> entry : scheduleNmemo.entrySet()) {
 			int[] key = entry.getKey();
 			String memo = entry.getValue();
 			boolean ok = true;
 			for(int i=0; i<3; i++) if(key[i] != this_day[i]) ok = false;
-			if(ok) hmap.put(key, memo);
+			if(ok) tmap.put(key, memo);
 		}
-		return hmap;
+		return tmap;
 	}
 	
 	synchronized void add(int[] time, String memo)
@@ -62,12 +82,6 @@ class Model extends GregorianCalendar
 		} catch(IOException e) { e.printStackTrace(); }
 	}
 
-	int getMaxDays() { return getActualMaximum(Calendar.DAY_OF_MONTH); }
-	int getWeekDay() { return get(Calendar.DAY_OF_WEEK); }
-	int year() { return get(Calendar.YEAR); }
-	int month() { return get(Calendar.MONTH); }
-	int day() { return get(Calendar.DAY_OF_MONTH); }
-
 	void today()
 	{
 		GregorianCalendar cal = new GregorianCalendar();
@@ -95,5 +109,15 @@ class Model extends GregorianCalendar
 		} else roll(Calendar.MONTH, true);
 		set(Calendar.DAY_OF_MONTH, 1);
 		return getWeekDay();
+	}
+
+	synchronized private void print() 
+	{
+		for(Map.Entry<int[], String> entry : scheduleNmemo.entrySet()) {
+			int[] key = entry.getKey();
+			String memo = entry.getValue();
+			for(int s : key) System.out.println(s + " "); 
+			System.out.println(memo);	
+		}
 	}
 }

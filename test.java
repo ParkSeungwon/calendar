@@ -1,18 +1,19 @@
 import java.io.*;
 import java.util.Calendar;
+import java.util.*;
 
 class test
 {
-	Model model = new Model();
-
 	public test()
 	{
-		System.out.println(model.get(Calendar.DAY_OF_WEEK));
 	}
 
 	public static void main(String[] s)
 	{
-		
+		int[] k = {1,2,3,4,5};
+		Model model = new Model();
+		TreeMap<int[], String> scheduleNmemo = new TreeMap<int[], String>(model);
+		scheduleNmemo.put(k, "fd");
 	}
 }
 
