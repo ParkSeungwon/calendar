@@ -56,7 +56,7 @@ class Popup extends JDialog implements ActionListener, ChangeListener
 		hbox[2].add(ok); 	hbox[2].add(cancel);
 		vbox.add(hbox[0]);
 		vbox.add(hbox[1]); 
-		vbox.add(memo); 
+		vbox.add(new JScrollPane(memo)); 
 		vbox.add(hbox[2]);
 		add(vbox);
 		setSize(400, 400);
