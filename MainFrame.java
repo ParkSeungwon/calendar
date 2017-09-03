@@ -8,7 +8,6 @@ class MainFrame extends JFrame implements ActionListener
 	Calendar cal;
 	Controller cInterface;
 	DailySchedule schedule;
-	Box hbox = new Box(BoxLayout.LINE_AXIS);
 	Box command = new Box(BoxLayout.LINE_AXIS);
 	Box vbox = new Box(BoxLayout.PAGE_AXIS);
 	JButton left = new JButton("<"), right = new JButton(">");
@@ -25,17 +24,17 @@ class MainFrame extends JFrame implements ActionListener
 		cal = new Calendar(ci);
 		schedule = new DailySchedule(ci);
 
-		add(hbox);
-		hbox.add(vbox);
-		vbox.add(command);
+		add(vbox);
 		command.add(left); command.add(year_month); 
 		command.add(right); command.add(today);
-		vbox.add(new JScrollPane(cal));//JScrollPane make column header visible
-		hbox.add(schedule);
+		vbox.add(command);
+		vbox.add(cal.getTableHeader());
+		vbox.add(cal);//JScrollPane make column header visible
+		vbox.add(schedule);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Calendar");
-		setSize(1100, 800);
+		setSize(400, 940);
 		setVisible(true);
 	}
 

@@ -2,6 +2,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.Color;
+import javax.swing.table.*;
 
 class Calendar extends JTable
 {
@@ -18,7 +19,10 @@ class Calendar extends JTable
 		setCellSelectionEnabled(true);
 		setSelectionBackground(Color.cyan);
 		setDefaultEditor(Object.class, null);//disable cell edit
-		setSize(500, 500);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		setDefaultRenderer(Object.class, centerRenderer);
+		setSize(300, 0);
 	}
 
 	void setDate(String[][] date)

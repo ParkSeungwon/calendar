@@ -6,7 +6,7 @@ import java.awt.Color;
 
 class DailySchedule extends JPanel implements ActionListener
 {
-	final int vlength = 800, hlength = 200, labelwidth = 100;
+	final int vlength = 800, hlength = 300, labelwidth = 100;
 	JButton[] buttons = null;
 	Controller cInterface;//controller interface
 	int sz = 0;//number of buttons
@@ -23,6 +23,7 @@ class DailySchedule extends JPanel implements ActionListener
 			timetable[i].setBorder(BorderFactory.createLineBorder(Color.black));
 			add(timetable[i]);
 		}
+		setSize(300, 500);
 	}
 
 	void set(String[] schedule, int[] ratio) 
