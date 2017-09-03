@@ -36,10 +36,13 @@ class Model extends GregorianCalendar
 	
 	synchronized void add(int[] time, String memo)
 	{
+		del(time);
 		scheduleNmemo.put(time, memo);
+		scheduleNmemo.values().remove("");
+		save();
 	}
 
-	synchronized void del(int[] time)
+	private void del(int[] time)
 	{
 		Vector<int[]> v = new Vector<int[]>();
 		for(int[] key : scheduleNmemo.keySet()) //cannot remove inside iteration
@@ -48,9 +51,8 @@ class Model extends GregorianCalendar
 		for(int[] key : v) scheduleNmemo.remove(key);
 	}
 
-	synchronized void save()
+	private void save()
 	{
-		scheduleNmemo.values().remove(""); 
 		try {
 			FileOutputStream fos = new FileOutputStream("schedule.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);

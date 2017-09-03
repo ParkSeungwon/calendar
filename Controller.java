@@ -85,9 +85,7 @@ class Controller
 	void add_schedule(int a, int b, String memo)
 	{//add a new schedule and repaint, Popup ok click event
 		int[] time = { model.year(), model.month(), model.day(), a, b };
-		model.del(time);//first delete former block
 		model.add(time, memo);
-		model.save();
 		date_click(Integer.toString(model.day()));
 	}
 }
